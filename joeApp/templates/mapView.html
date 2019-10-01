@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MapViewTest</title>
+</head>
+<body>
+    <div id="map" style="width:500px;height:400px;"></div>
+    <div id="place" style="width:500px;height:400px;"></div>
+    <!--script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=389fa57479546147cb45ca576d801800"></script-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=389fa57479546147cb45ca576d801800&libraries=services"></script>
+    <script>
+/*
+		var container = document.getElementById('map');
+
+
+		var options = {
+			center: new kakao.maps.LatLng(37.507754, 127.059734),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+
+*/
+	    var places = new kakao.maps.services.Places();
+
+	    //places.setMap(map);
+
+        //callback full json ext
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                //console.log(result);
+                //document.write(JSON.stringify(result));
+
+                var jbString = String(JSON.stringify(result)).replace('[{','').replace('}]','');
+                var jbSplit = jbString.split('},{');
+                for ( var i in jbSplit ) {
+                    document.write(jbSplit[i] + '<br>' );
+                }
+
+            }
+        };
+
+        //callback key ext
+        var callback2 = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                console.log(result['id']);
+            }
+        };
+
+        //키워드 검색
+        places.keywordSearch('양식', callback, {
+            location: new kakao.maps.LatLng(37.507754, 127.059734),
+            size : 15
+            ,page : 1
+            ,sort : "distance"
+        });
+
+        //카테고리 검색
+        places.categorySearch('CS2', callback2, {
+            useMapBounds: true
+        });
+
+
+
+	</script>
+</body>
+</html>
