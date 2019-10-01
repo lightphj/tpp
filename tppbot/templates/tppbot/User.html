@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage User</title>
+</head>
+<body>
+    <div>
+        {% if users %}
+            <ul>
+                {% for user in users %}
+                <li>{{ user.uuid}} , {{ user.create_date }} </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Users</p>
+        {% endif %}
+    </div>
+</body>
+</html>

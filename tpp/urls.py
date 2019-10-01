@@ -22,5 +22,8 @@ urlpatterns = [
     path('keyboard',views.keyboard),
     path('message',views.answer),
     path('todaysmenu',views.todaysmenu),
+    path('showUser',views.showUser, name='showUser'),
+    path('addUser',views.addUser),
+    path('list', views.list),
 ]
 
