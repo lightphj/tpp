@@ -25,5 +25,6 @@ urlpatterns = [
     path('showUser',views.showUser, name='showUser'),
     path('addUser',views.addUser),
     path('list', views.list),
+    path('topfive', views.topFivePlace),
 ]
 

@@ -95,11 +95,13 @@ def addUser(request):
 
 
 @csrf_exempt
-def list(request):
+def topFivePlace(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
-    print(json.dumps(received_json_data, indent=4, sort_keys=True))
-
+    #print(json.dumps(received_json_data, indent=4, sort_keys=True))
+    tfp = place.objects.filter(category_group_code='01')
+    print(tfp["place_name"])
+    #places = place.objects.filter(category_group_code='01')
     return JsonResponse({
 
         "version": "2.0",
@@ -110,39 +112,39 @@ def list(request):
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": "aaaaa",
-                                "description": "bbb",
+                                "title": tfp["place_name"],
+                                "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
                                 "thumbnail": {
                                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
                                 },
                                 "buttons": [
                                     {
                                         "action": "message",
-                                        "label": "ccc",
-                                        "messageText": "ddd"
+                                        "label": "메뉴보기",
+                                        "messageText": "메뉴를보여줘야하는데.."
                                     },
                                     {
                                         "action": "webLink",
-                                        "label": "eeee",
+                                        "label": "지도보기",
                                         "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
                                     }
                                 ]
                             },
                             {
-                                "title": "ffff",
-                                "description": "gggg",
+                                "title": "부대찌개",
+                                "description": "부대찌개 핵맛",
                                 "thumbnail": {
                                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
                                 },
                                 "buttons": [
                                     {
                                         "action": "message",
-                                        "label": "hhhh",
-                                        "messageText": "iiii"
+                                        "label": "메뉴보기",
+                                        "messageText": "메뉴를보여줘야하는데.."
                                     },
                                     {
                                         "action": "webLink",
-                                        "label": "kkkkk",
+                                        "label": "지도보기",
                                         "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
                                     }
                                 ]
@@ -155,4 +157,44 @@ def list(request):
         }
 
     }
+    )
+
+
+
+@csrf_exempt
+def list(request):
+
+    return JsonResponse(
+        {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "basicCard": {
+                            "title": "어떤 종류의 음식점을 갈까?",
+                            "description": "한식/양식/중식 택1",
+                            "thumbnail": {
+                                "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                            },
+                            "buttons": [
+                                {
+                                    "action": "message",
+                                    "label": "한식",
+                                    "messageText": "한식"
+                                },
+                                {
+                                    "action": "message",
+                                    "label": "중식",
+                                    "messageText": "중식"
+                                },{
+                                    "action": "message",
+                                    "label": "양식",
+                                    "messageText": "양식"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
     )
