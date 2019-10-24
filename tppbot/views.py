@@ -153,7 +153,7 @@ def topFivePlace(request):
 
     fulljson = jsonheader+jsonstr+jsonfooter
 
-    #print(fulljson)
+    print(fulljson)
 
     dictjson = json.loads(fulljson)
 
