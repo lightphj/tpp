@@ -157,7 +157,7 @@ def topFivePlace(request):
 
     dictjson = json.loads(fulljson)
 
-   # print(dictjson)
+    print(dictjson)
     #places = place.objects.filter(category_group_code='01')
     return JsonResponse(dictjson
     )
