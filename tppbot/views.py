@@ -105,8 +105,7 @@ def topFivePlace(request):
         print(p.place_name)
         fp = p.place_name
 
-    #places = place.objects.filter(category_group_code='01')
-    return JsonResponse({
+    jsonresp = '''{
 
         "version": "2.0",
         "template": {
@@ -160,7 +159,12 @@ def topFivePlace(request):
             ]
         }
 
-    }
+    }'''
+
+
+
+    #places = place.objects.filter(category_group_code='01')
+    return JsonResponse(dict(jsonresp)
     )
 
 
