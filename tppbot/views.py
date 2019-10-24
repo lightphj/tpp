@@ -153,7 +153,7 @@ def topFivePlace(request):
 
 
     #places = place.objects.filter(category_group_code='01')
-    return JsonResponse(dict(jsonheader+jsonstr+jsonfooter)
+    return JsonResponse(jsonheader+jsonstr+jsonfooter
     )
 
 
