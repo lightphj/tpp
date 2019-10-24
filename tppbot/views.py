@@ -110,39 +110,39 @@ def list(request):
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": "11",
-                                "description": "111",
+                                "title": "aaaaa",
+                                "description": "bbb",
                                 "thumbnail": {
                                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
                                 },
                                 "buttons": [
                                     {
                                         "action": "message",
-                                        "label": "222",
-                                        "messageText": "222"
+                                        "label": "ccc",
+                                        "messageText": "ddd"
                                     },
                                     {
                                         "action": "webLink",
-                                        "label": "333",
+                                        "label": "eeee",
                                         "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
                                     }
                                 ]
                             },
                             {
-                                "title": "4444",
-                                "description": "4444",
+                                "title": "ffff",
+                                "description": "gggg",
                                 "thumbnail": {
                                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
                                 },
                                 "buttons": [
                                     {
                                         "action": "message",
-                                        "label": "555",
-                                        "messageText": "5555"
+                                        "label": "hhhh",
+                                        "messageText": "iiii"
                                     },
                                     {
                                         "action": "webLink",
-                                        "label": "666",
+                                        "label": "kkkkk",
                                         "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
                                     }
                                 ]
