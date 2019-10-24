@@ -151,9 +151,10 @@ def topFivePlace(request):
     }'''
 
 
-
+    fulljson = jsonheader+jsonstr+jsonfooter
+    dictjson = json.loads(fulljson)
     #places = place.objects.filter(category_group_code='01')
-    return JsonResponse(jsonheader+jsonstr+jsonfooter
+    return JsonResponse(dictjson
     )
 
 
