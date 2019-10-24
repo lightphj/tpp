@@ -101,11 +101,9 @@ def topFivePlace(request):
     #cgcode = received_json_data["category"]
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     tfp = place.objects.filter(category_group_code='01')
-    for p in tfp:
-        print(p.place_name)
-        fp = p.place_name
+    isFirst = 'y'
 
-    jsonresp = '''{
+    jsonheader = '''{
 
         "version": "2.0",
         "template": {
@@ -113,46 +111,36 @@ def topFivePlace(request):
                 {
                     "carousel": {
                         "type": "basicCard",
-                        "items": [
-                            {
-                                "title": fp,
-                                "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
-                                "thumbnail": {
-                                    "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                },
-                                "buttons": [
-                                    {
-                                        "action": "message",
-                                        "label": "메뉴보기",
-                                        "messageText": "메뉴를보여줘야하는데.."
-                                    },
-                                    {
-                                        "action": "webLink",
-                                        "label": "지도보기",
-                                        "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-                                    }
-                                ]
-                            },
-                            {
-                                "title": "부대찌개",
-                                "description": "부대찌개 핵맛",
-                                "thumbnail": {
-                                    "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                },
-                                "buttons": [
-                                    {
-                                        "action": "message",
-                                        "label": "메뉴보기",
-                                        "messageText": "메뉴를보여줘야하는데.."
-                                    },
-                                    {
-                                        "action": "webLink",
-                                        "label": "지도보기",
-                                        "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-                                    }
-                                ]
-                            }
+                        "items": [ '''
 
+    for p in tfp:
+        if isFirst != 'y':
+            jsonstr = jsonstr + ','
+
+        jsonstr = jsonstr + '''
+            {
+                "title": ''' + p.place_name + ''',
+                "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
+                "thumbnail": {
+                    "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                },
+                "buttons": [
+                    {
+                        "action": "message",
+                        "label": "메뉴보기",
+                        "messageText": "메뉴를보여줘야하는데.."
+                    },
+                    {
+                        "action": "webLink",
+                        "label": "지도보기",
+                        "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
+                    }
+                ]
+            }
+        '''
+
+
+    jsonfooter = '''
                         ]
                     }
                 }
@@ -164,7 +152,7 @@ def topFivePlace(request):
 
 
     #places = place.objects.filter(category_group_code='01')
-    return JsonResponse(dict(jsonresp)
+    return JsonResponse(dict(jsonheader+jsonstr+jsonfooter)
     )
 
 
