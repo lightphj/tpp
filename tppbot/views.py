@@ -98,9 +98,9 @@ def addUser(request):
 def topFivePlace(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
-    cgcode = received_json_data["category"]
+    #cgcode = received_json_data["category"]
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
-    tfp = place.objects.filter(category_group_code=cgcode)
+    tfp = place.objects.filter(category_group_code='01')
     for p in tfp:
         print(p.place_name)
         fp = p.place_name
