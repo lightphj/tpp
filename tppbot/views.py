@@ -98,9 +98,13 @@ def addUser(request):
 def topFivePlace(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
+    cgcode = received_json_data["category"]
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
-    tfp = place.objects.filter(category_group_code='01')
-    print(tfp["place_name"])
+    tfp = place.objects.filter(category_group_code=cgcode)
+    for p in tfp:
+        print(p.place_name)
+        fp = p.place_name
+
     #places = place.objects.filter(category_group_code='01')
     return JsonResponse({
 
@@ -112,7 +116,7 @@ def topFivePlace(request):
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": tfp["place_name"],
+                                "title": fp,
                                 "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
                                 "thumbnail": {
                                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
