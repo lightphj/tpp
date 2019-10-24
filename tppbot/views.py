@@ -117,6 +117,7 @@ def topFivePlace(request):
     for p in tfp:
         if isFirst != 'y':
             jsonstr = jsonstr + ','
+            isFirst = 'n'
 
         jsonstr = jsonstr + '''
             {
