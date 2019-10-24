@@ -102,6 +102,7 @@ def topFivePlace(request):
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     tfp = place.objects.filter(category_group_code='01')
     isFirst = 'y'
+    jsonstr = ''
 
     jsonheader = '''{
 
