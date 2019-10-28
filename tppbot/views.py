@@ -147,9 +147,9 @@ def topFivePlace(request):
                 }'''
     logger.info(category)
     logger.info(type(category))
-    if category == "01" :
+    if category == '01' :
         jsonrepl = replK+replC
-    elif category == "02" :
+    elif category == '02' :
         jsonrepl = replK+replW
     else:
         jsonrepl = replC+replW
@@ -188,7 +188,7 @@ def topFivePlace(request):
             }
         '''
 
-
+    logger.info(jsonrepl)
     jsonfooter = '''
                         ]
                     }
