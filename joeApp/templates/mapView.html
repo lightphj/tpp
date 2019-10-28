@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MapViewTest</title>
+</head>
+<body>
+    <!--script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=389fa57479546147cb45ca576d801800"></script-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=389fa57479546147cb45ca576d801800&libraries=services"></script>
+    <script>
+
+        var output = '';
+
+	    var places = new kakao.maps.services.Places();
+
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+
+                var result = JSON.stringify(result);
+
+                //document.write(result);
+                console.log(result);
+            }
+        };
+
+        //키워드 검색
+        places.keywordSearch('한식', callback, {
+            location: new kakao.maps.LatLng(37.507754, 127.059734),
+            size : 15
+            ,page : 1
+            ,sort : "distance"
+        })
+	</script>
+    %result%
+</body>
+</html>
