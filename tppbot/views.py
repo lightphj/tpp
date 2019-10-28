@@ -207,7 +207,7 @@ def topFivePlace(request):
 
     }'''
 
-
+    logger.info(jsonfooter)
     fulljson = jsonheader+jsonstr+jsonfooter
 
     #print(fulljson)
