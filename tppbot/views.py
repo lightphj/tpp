@@ -122,7 +122,7 @@ def topFivePlace(request):
 
         jsonstr = jsonstr + '''
             {
-                "title": ''' + p.place_name + ''',
+                "title": "''' + p.place_name + '''",
                 "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
                 "thumbnail": {
                     "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
