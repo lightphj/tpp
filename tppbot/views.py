@@ -145,7 +145,8 @@ def topFivePlace(request):
                     "action":"message",
                     "messageText":"중식"
                 }'''
-
+    logger.info(category)
+    logger.info(type(category))
     if category == "01" :
         jsonrepl = replK+replC
     elif category == "02" :
