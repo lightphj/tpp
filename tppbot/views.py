@@ -6,6 +6,21 @@ from tppbot.forms import *
 from django.utils import timezone
 import json
 
+import logging
+import logging.config
+import os
+
+if __name__ == '__main__':
+    with open('logging.json', 'rt') as f:
+        config = json.load(f)
+
+    logging.config.dictConfig(config)
+
+    logger = logging.getLogger()
+    logger.info("test!!!")
+
+
+
 
 @csrf_exempt
 def keyboard(request):
@@ -98,9 +113,9 @@ def addUser(request):
 def topFivePlace(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
-    print('aa')
-    print(received_json_data)
-    print(type(received_json_data))
+
+    logger.info(received_json_data)
+    logger.info(type(received_json_data))
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     tfp = place.objects.filter(category_group_code='01')
     isFirst = 'y'
