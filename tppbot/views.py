@@ -125,7 +125,7 @@ def topFivePlace(request):
                 "title": "''' + p.place_name + '''",
                 "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
                 "thumbnail": {
-                    "imageUrl": "http://58.78.124.188:8000/static/images/irene.jpg"
+                    "imageUrl": "http://52.78.124.188:8000/static/images/irene.jpg"
                 },
                 "buttons": [
                     {
