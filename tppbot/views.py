@@ -131,17 +131,17 @@ def topFivePlace(request):
     jsonrepl = ''
 
     replK = ''',{
-                    "messageTex":"한식",
+                    "label":"한식",
                     "action":"message",
                     "messageText":"한식"
                 }'''
     replW = ''',{
-                    "messageTex":"양식",
+                    "label":"양식",
                     "action":"message",
                     "messageText":"양식"
                 }'''
     replC = ''',{
-                    "messageTex":"중식",
+                    "label":"중식",
                     "action":"message",
                     "messageText":"중식"
                 }'''
@@ -197,7 +197,7 @@ def topFivePlace(request):
         
             "quickReplies" : [
                 {
-                    "messageTex":"처음으로",
+                    "label":"처음으로",
                     "action":"message",
                     "messageText":"처음으로"
                 }
