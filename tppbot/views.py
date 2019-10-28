@@ -9,14 +9,14 @@ import json
 import logging
 import logging.config
 import os
-if __name__ == '__main__':
-    with open('tppbot/logging.json', 'rt') as f:
-        config = json.load(f)
 
-    logging.config.dictConfig(config)
+with open('tppbot/logging.json', 'rt') as f:
+    config = json.load(f)
 
-    logger = logging.getLogger()
-    logger.info("test!!!")
+logging.config.dictConfig(config)
+
+logger = logging.getLogger()
+logger.info("test!!!")
 
 
 
