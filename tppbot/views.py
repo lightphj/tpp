@@ -193,8 +193,8 @@ def topFivePlace(request):
                         ]
                     }
                 }
-            ]
-        }, {
+            ],
+        
             "quickReplies" : [
                 {
                     "messageTex":"처음으로",
@@ -204,7 +204,6 @@ def topFivePlace(request):
                 ''' + jsonrepl +'''
             ]
         }   
-
     }'''
 
     #logger.info("\n\n jsonfooter : \n" + jsonfooter)

@@ -186,7 +186,7 @@ LOGGING = {
             'level': 'DEBUG',
         },
         'books': {
-            'handlers': ['console'],
+            'handlers': ['file'],
             'level': 'DEBUG',
         }
     },
