@@ -166,7 +166,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/logfile'),
+            'filename': os.path.join(BASE_DIR, 'logs/server.log'),
             'formatter': 'format1',
         },
         # 콘솔(터미널)에 출력
