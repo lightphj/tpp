@@ -113,8 +113,8 @@ def topFivePlace(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
 
-    logger.info(received_json_data)
-    logger.info(type(received_json_data))
+    logger.info(received_json_data['action']['param']['category'])
+    #logger.info(type(received_json_data))
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     tfp = place.objects.filter(category_group_code='01')
     isFirst = 'y'
