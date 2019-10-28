@@ -13,9 +13,9 @@ import os
 with open('tppbot/logging.json', 'rt') as f:
     config = json.load(f)
 
-logging.config.dictConfig(config)
+#logging.config.dictConfig(config)
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 
