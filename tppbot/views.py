@@ -123,20 +123,15 @@ def topFivePlace(request):
         jsonstr = jsonstr + '''
             {
                 "title": "''' + p.place_name + '''",
-                "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
+                "description": " '''+ p.phone +''' ",
                 "thumbnail": {
                     "imageUrl": "http://52.78.124.188:8000/static/images/irene.jpg"
                 },
                 "buttons": [
                     {
-                        "action": "message",
-                        "label": "메뉴보기",
-                        "messageText": "메뉴를보여줘야하는데.."
-                    },
-                    {
                         "action": "webLink",
                         "label": "''' + p.road_address_name +'''",
-                        "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
+                        "webLinkUrl": "'''+p.place_url+'''"
                     }
                 ]
             }
