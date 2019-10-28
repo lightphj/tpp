@@ -128,6 +128,20 @@ def topFivePlace(request):
     isFirst = 'y'
     jsonstr = ''
 
+    jsonrepl = ''
+
+    replK = ''
+    replW = ''
+    replC = ''
+
+    if category == "01" :
+        jsonrepl = replK+replC
+    elif category == "02" :
+        jsonrepl = replK+replW
+    else:
+        jsonrepl = replC+replW
+
+
     jsonheader = '''{
 
         "version": "2.0",
@@ -167,7 +181,16 @@ def topFivePlace(request):
                     }
                 }
             ]
-        }
+        }, {
+            "quickReplies" : [
+                {
+                    "messageTex":"처음으로",
+                    "action":"message",
+                    "messageText":"처음으로"
+                },
+                ''' + jsonrepl +'''
+            ]
+        }   
 
     }'''
 
