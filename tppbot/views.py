@@ -125,7 +125,7 @@ def topFivePlace(request):
                 "title": "''' + p.place_name + '''",
                 "description": "갈비찜,육회비빔밥,냉면이 유명한 맛집",
                 "thumbnail": {
-                    "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
+                    "imageUrl": "http://58.78.124.188:8000/tppbot/images/irene.jpg"
                 },
                 "buttons": [
                     {
@@ -135,7 +135,7 @@ def topFivePlace(request):
                     },
                     {
                         "action": "webLink",
-                        "label": "지도보기",
+                        "label": "''' + p.road_address_name +'''",
                         "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
                     }
                 ]
