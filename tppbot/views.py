@@ -188,7 +188,7 @@ def topFivePlace(request):
             }
         '''
 
-    logger.info(jsonrepl)
+    #logger.info(jsonrepl)
     jsonfooter = '''
                         ]
                     }
@@ -207,9 +207,10 @@ def topFivePlace(request):
 
     }'''
 
-    logger.info("\n\n jsonfooter : \n" + jsonfooter)
+    #logger.info("\n\n jsonfooter : \n" + jsonfooter)
     fulljson = jsonheader+jsonstr+jsonfooter
 
+    logger.info("\n\n fulljson : \n" + fulljson)
     #print(fulljson)
 
     dictjson = json.loads(fulljson)
