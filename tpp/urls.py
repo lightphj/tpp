@@ -15,16 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tppbot import views
+#from tppbot import views
+from hIncruit import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('keyboard',views.keyboard),
-    path('message',views.answer),
-    path('todaysmenu',views.todaysmenu),
-    path('showUser',views.showUser, name='showUser'),
-    path('addUser',views.addUser),
-    path('list', views.list),
-    path('topfive', views.topFivePlace),
+    #path('keyboard',views.keyboard),
+    #path('message',views.answer),
+    #path('todaysmenu',views.todaysmenu),
+    #path('showUser',views.showUser, name='showUser'),
+    #path('addUser',views.addUser),
+    #path('list', views.list),
+    #path('topfive', views.topFivePlace)
 ]
 
