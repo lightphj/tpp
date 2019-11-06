@@ -7,11 +7,11 @@ from django.utils import timezone
 import json
 
 import logging
-import logging.config
+#import logging.config
 import os
 
-with open('tppbot/logging.json', 'rt') as f:
-    config = json.load(f)
+#with open('tppbot/logging.json', 'rt') as f:
+  #  config = json.load(f)
 
 #logging.config.dictConfig(config)
 
