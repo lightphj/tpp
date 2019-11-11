@@ -22,11 +22,23 @@ def startQuestion(request):
     6. 각 답변은 모두 클릭시 현재 블럭ID로 재연결 해야한다.
     
     '''
+
+    #변수선언
+    botUserKey = ''
+    cur_poll_id = ''
+    cur_q_id =''
+    client_answer =''
+
+    jsonstr = ''
+
+    # payload 데이터를 받아온다.
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
-    botUserKey = ''
     try:
         botUserKey = received_json_data['userRequest']['user']['id']
+        cur_poll_id = received_json_data['action']['clientExtra']['poll']
+        cur_q_id =int(received_json_data['action']['clientExtra']['question'])
+        client_answer =received_json_data['action']['clientExtra']['answer']
     except TypeError:
         logger.error("json data parising error")
     except ValueError:
@@ -38,8 +50,33 @@ def startQuestion(request):
     logger.info(type(received_json_data))
     print(json.dumps(received_json_data, indent=4, sort_keys=True))
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
-    isFirst = 'y'
-    jsonstr = ''
+
+    #받은 데이터가 있다면
+    if client_answer is not None and client_answer != '':
+
+        #받아온 데이터를 설문결과에 저장한다
+
+        # ANSWER 객체 생성
+        ans = ANSWER(poll_id='Kim', question_id='kim@test.com', user_id='Hi', value='', create_date=timezone.now())
+
+        # 새 객체 INSERT
+        ans.save()
+
+        # 전체 문항수를 가져와서 문항수=번호 이면 basicCard 로 설문이 끝났음을 알리고, endQuestion block 으로 연결하는 버튼을 제공하는 json 작성
+        len = QUESTION.objects.filter(poll_id = cur_poll_id).count()
+        if len <= cur_q_id:
+            #설문 끝났습니다
+            jsonstr=''
+        else:
+            #설문 데이터를 가져온다.
+
+            q = QUESTION.objects.get(poll_id = cur_poll_id, question_id = cur_q_id+1)
+
+            jsonstr = ''
+
+
+    # 문항수 와 번호가 아니라면 다음 설문데이터를 가져온다.
+
     logger.info(botUserKey)
 
     fulljson = '''{

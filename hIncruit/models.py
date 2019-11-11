@@ -72,6 +72,7 @@ class ANSWER(models.Model):
     question_id = models.IntegerField(max_length=4, default=-1, verbose_name='문항 ID')
     user_id = models.ForeignKey(USER, on_delete=models.DO_NOTHING())
     val = models.CharField(max_length=10, default='0', verbose_name='답변값')
+    create_date = models.DateTimeField(default=timezone.now)
 
 class QUESTION_CATEGORY(models.Model):
     poll_id = models.IntegerField(max_length=4, default=-1, verbose_name='설문 ID')
