@@ -27,5 +27,6 @@ urlpatterns = [
     #path('addUser',views.addUser),
     #path('list', views.list),
     #path('topfive', views.topFivePlace)
+    path('parseUrl', views.parseUrl)
 ]
 
