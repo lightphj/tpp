@@ -22,7 +22,7 @@ class ANNOUNCEMENT(models.Model):
 
 
 class ANNOUNCE_DETAIL(models.Model):
-    announcement_id = models.ForeignKey(ANNOUNCEMENT, on_delete = models.CASCADE)
+    announcement_id = models.ForeignKey(ANNOUNCEMENT, on_delete = models.CASCADE, verbos_name='채용공고id')
     job = models.CharField(max_length=10, blank=True, null=True, verbose_name='직무코드')
     title = models.CharField(max_length=200, blank=True, null=True, verbose_name='제목')
     content = models.CharField(max_length=1000, blank=True, null=True, verbose_name='내용')
