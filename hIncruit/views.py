@@ -15,9 +15,9 @@ def startQuestion(request):
     todo = '''
     1. 데이터를 받는다 ( user: user_id, clientExtra : 설문ID,문항번호,답변YN)
     2. 받은 데이터를 DB저장
-    3. 설문ID와 문항번호를 이용해서 다음 설문데이터를 꺼낸다
-    3-1. 마지막 설문이었다면, 챗봇에 결과보기라는 버튼을 주고 눌렀을때 설문결과페이지로 가야한다.
-    4. 챗봇에 json 으로 설문전달
+    3. 설문ID와 문항번호를 이용해서 다음 설문데이터를 꺼내서 json 작성
+    3-1. 마지막 설문이었다면, 챗봇에 결과보기라는 버튼을 주고 눌렀을때 설문결과페이지로 가는 json 작성
+    4. 챗봇에 json 전달
     5. 각 설문의 답변 버튼에 extra 로 설문id,문항번호,답변YN 값이 들어가있어야하고
     6. 각 답변은 모두 클릭시 현재 블럭ID로 재연결 해야한다.
     
@@ -57,7 +57,7 @@ def startQuestion(request):
         #받아온 데이터를 설문결과에 저장한다
 
         # ANSWER 객체 생성
-        ans = ANSWER(poll_id='Kim', question_id='kim@test.com', user_id='Hi', value='', create_date=timezone.now())
+        ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=botUserKey, value=client_answer, create_date=timezone.now())
 
         # 새 객체 INSERT
         ans.save()
@@ -72,50 +72,54 @@ def startQuestion(request):
 
             q = QUESTION.objects.get(poll_id = cur_poll_id, question_id = cur_q_id+1)
 
-            jsonstr = ''
+            jsonstr = '''{
+                "version": "2.0",
+                "template": {
+                    "outputs": [
+                        {
+                            "basicCard": {
+                                "title": "Q.'''+ q.question_id + '''/''' + len +'''",
+                                "description": "''' + q.subject + '''",
+                                "buttons": [    
+                                    {
+                                      "action": "block",
+                                      "label": "Y",
+                                      "messageText": "Y"
+                                      "blockId": "blockId",
+                                      "extra": {
+                                        "poll" : "''' + q.poll_id + '''",
+                                        "question" : "''' + q.question_id + '''",
+                                        "answer" : "Y"
+                                      }
+                                    },
+                                    {
+                                      "action": "block",
+                                      "label": "N",
+                                      "messageText": "N"
+                                      "blockId": "blockId",
+                                      "extra": {
+                                        "poll" : "''' + q.poll_id + '''",
+                                        "question" : "''' + q.question_id + '''",
+                                        "answer" : "N"
+                                      }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }'''
+    else:
+        #전달받은 값이 없으면??
+        jsonstr=''
 
 
-    # 문항수 와 번호가 아니라면 다음 설문데이터를 가져온다.
+
+
 
     logger.info(botUserKey)
-
-    fulljson = '''{
-  "version": "1.0",
-  "template": {
-    "outputs": [
-      {
-        "basicCard": {
-          "title": "보물상자",
-          "description": "보물상자 안에는 뭐가 있을까",
-          "thumbnail": {
-            "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-          },
-          "profile": {
-            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4BJ9LU4Ikr_EvZLmijfcjzQKMRCJ2bO3A8SVKNuQ78zu2KOqM",
-            "nickname": "보물상자"
-          },
-          "social": {
-            "like": 1238,
-            "comment": 8,
-            "share": 780
-          },
-          "buttons": [
-            {
-              "action": "message",
-              "label": "열어보기",
-              "messageText": "짜잔! 우리가 찾던 보물입니다"
-            },
-            {
-              "action":  "webLink",
-              "label": "구경하기",
-              "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-            }
-          ]
-        }
-      }
-    ]
-  }
-}'''
+    #챗봇에 json 전달
+    fulljson = jsonstr
 
     #logger.info("\n\n fulljson : \n" + fulljson)
     # print(fulljson)
