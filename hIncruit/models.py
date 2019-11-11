@@ -5,6 +5,7 @@ from django.utils import timezone
 # Create your models here.
 class ANNOUNCEMENT(models.Model):
     category = models.CharField(max_length=10, blank=True, null=True, verbose_name='직군 코드')
+    screening = models.CharField(max_length=10 blank=True, null=True, verbose_name='채용 구분')
     title = models.CharField(max_length=200, blank=True, null=True, verbose_name='제목')
     content = models.CharField(max_length=1000, blank=True, null=True, verbose_name='내용')
     sub_content = models.TextField(null=True,verbose_name ='상세내용')
@@ -21,7 +22,7 @@ class ANNOUNCEMENT(models.Model):
 
 
 class ANNOUNCE_DETAIL(models.Model):
-    category = models.CharField(max_length=10, blank=True, null=True, verbose_name='직군 코드')
+    announcement_id = models.ForeignKey(ANNOUNCEMENT, on_delete = models.CASCADE)
     job = models.CharField(max_length=10, blank=True, null=True, verbose_name='직무코드')
     title = models.CharField(max_length=200, blank=True, null=True, verbose_name='제목')
     content = models.CharField(max_length=1000, blank=True, null=True, verbose_name='내용')
