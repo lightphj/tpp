@@ -59,7 +59,6 @@ class QUESTION(models.Model):
     poll_id = models.IntegerField(max_length=4, default=-1, verbose_name='설문 ID')
     question_id = models.IntegerField(max_length=4, default=-1, verbose_name='문항 ID')
     subject = models.CharField(max_length=200, default='subject', verbose_name='질문')
-    order_no = models.IntegerField(max_length=4,null=True,blank=True,db_index=True, verbose_name='문항번호')
     create_date = models.DateTimeField(default=timezone.now)
     expire_date = models.DateTimeField(null=True)
     last_modify_date = models.DateTimeField(default=timezone.now)
