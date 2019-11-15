@@ -27,6 +27,7 @@ urlpatterns = [
     #path('addUser',views.addUser),
     #path('list', views.list),
     #path('topfive', views.topFivePlace)
-    path('question', views.Question)
+    path('question', views.Question),
+    path('makeq', views.makeQuestion)
 ]
 

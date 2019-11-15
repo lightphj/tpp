@@ -56,6 +56,13 @@ def Question(request):
 
         #받아온 데이터를 설문결과에 저장한다
 
+        #User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
+        if not USER.objects.get(user_id = botUserKey).exists():
+            usr = USER(user_id = botUserKey)
+            usr.save()
+
+
+
         # ANSWER 객체 생성
         ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=botUserKey, value=client_answer, create_date=timezone.now())
 
@@ -163,3 +170,8 @@ def endQuestion(request):
     2-1. iter를 다돌면, 가장 높은 점수를 찾고, 동일점수가 여러개일시 '~~~~' 의방법으로 order 해서 한줄만 가져온다.
     3. 가져온 직무와 그 내용을 뿌려주고, 다시 설문하기와 처음으로 돌아가기 quickRepl 을 준다.
     '''
+
+
+def makeQuestion(request):
+    que = QUESTION(poll_id=1, question_id=1, subject='설문1 질문1 입니다')
+    que.save()
