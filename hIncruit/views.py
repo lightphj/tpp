@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Max
 from django.http import JsonResponse
 from hIncruit.models import *
 from django.utils import timezone
@@ -37,7 +38,7 @@ def Question(request):
     try:
         botUserKey = received_json_data['userRequest']['user']['id']
         cur_poll_id = received_json_data['action']['clientExtra']['poll']
-        cur_q_id =int(received_json_data['action']['clientExtra']['question'])
+        cur_q_id_str =received_json_data['action']['clientExtra']['question']
         client_answer =received_json_data['action']['clientExtra']['answer']
     except TypeError:
         logger.error("json data parising error")
@@ -53,7 +54,7 @@ def Question(request):
 
     #받은 데이터가 있다면
     if client_answer is not None and client_answer != '':
-
+        cur_q_id = int(cur_q_id_str)
         #받아온 데이터를 설문결과에 저장한다
 
         #User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
@@ -68,79 +69,83 @@ def Question(request):
 
         # 새 객체 INSERT
         ans.save()
+    else:
+        cur_q_id = 0
+        cur_poll_id_dict = QUESTION.objects.all().aggregate(Max('poll_id'))
+        cur_poll_id = int(cur_poll_id_dict['poll_id__max'])
+        print(cur_poll_id)
+        print(type(cur_poll_id))
 
-        # 전체 문항수를 가져와서 문항수=번호 이면 basicCard 로 설문이 끝났음을 알리고, endQuestion block 으로 연결하는 버튼을 제공하는 json 작성
-        len = QUESTION.objects.filter(poll_id = cur_poll_id).count()
-        if len <= cur_q_id:
-            #설문 끝났습니다
-            jsonstr='''
-                {
-                    "version": "2.0",
-                    "template": {
-                        "outputs": [
-                            {
-                                "basicCard": {
-                                    "title": " 모든 문항 완료 ",
-                                    "description": "모든 문항에 응답해 주셨습니다.",
-                                    "buttons": [
-                                        {
-                                            "action": "block",
-                                            "messageText": "결과보기",
-                                            "label": "결과보기"
-                                            "blockId": "blockId",
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            '''
-        else:
-            #설문 데이터를 가져온다.
-
-            q = QUESTION.objects.get(poll_id = cur_poll_id, question_id = cur_q_id+1)
-
-            jsonstr = '''{
+    # 전체 문항수를 가져와서 문항수=번호 이면 basicCard 로 설문이 끝났음을 알리고, endQuestion block 으로 연결하는 버튼을 제공하는 json 작성
+    len = QUESTION.objects.filter(poll_id = cur_poll_id).count()
+    if len <= cur_q_id:
+        #설문 끝났습니다
+        jsonstr='''
+            {
                 "version": "2.0",
                 "template": {
                     "outputs": [
                         {
                             "basicCard": {
-                                "title": "Q.'''+ q.question_id + '''/''' + len +'''",
-                                "description": "''' + q.subject + '''",
-                                "buttons": [    
+                                "title": " 모든 문항 완료 ",
+                                "description": "모든 문항에 응답해 주셨습니다.",
+                                "buttons": [
                                     {
-                                      "action": "block",
-                                      "label": "Y",
-                                      "messageText": "Y"
-                                      "blockId": "blockId",
-                                      "extra": {
-                                        "poll" : "''' + q.poll_id + '''",
-                                        "question" : "''' + q.question_id + '''",
-                                        "answer" : "Y"
-                                      }
-                                    },
-                                    {
-                                      "action": "block",
-                                      "label": "N",
-                                      "messageText": "N"
-                                      "blockId": "blockId",
-                                      "extra": {
-                                        "poll" : "''' + q.poll_id + '''",
-                                        "question" : "''' + q.question_id + '''",
-                                        "answer" : "N"
-                                      }
+                                        "action": "block",
+                                        "messageText": "결과보기",
+                                        "label": "결과보기",
+                                        "blockId": "blockId"
                                     }
                                 ]
                             }
                         }
                     ]
                 }
-            }'''
+            }
+        '''
     else:
-        #전달받은 값이 없으면??
-        jsonstr=''
+        #설문 데이터를 가져온다.
+
+        q = QUESTION.objects.get(poll_id = cur_poll_id, question_id = cur_q_id+1)
+
+        jsonstr = '''{
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "basicCard": {
+                            "title": "Q.'''+ str(q.question_id) + '''/''' + str(len) +'''",
+                            "description": "''' + q.subject + '''",
+                            "buttons": [    
+                                {
+                                  "action": "block",
+                                  "label": "Y",
+                                  "messageText": "Y",
+                                  "blockId": "blockId",
+                                  "extra": {
+                                    "poll" : "''' + str(q.poll_id) + '''",
+                                    "question" : "''' + str(q.question_id) + '''",
+                                    "answer" : "Y"
+                                  }
+                                },
+                                {
+                                  "action": "block",
+                                  "label": "N",
+                                  "messageText": "N",
+                                  "blockId": "blockId",
+                                  "extra": {
+                                    "poll" : "''' + str(q.poll_id) + '''",
+                                    "question" : "''' + str(q.question_id) + '''",
+                                    "answer" : "N"
+                                  }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }'''
+
 
 
 
@@ -175,3 +180,5 @@ def endQuestion(request):
 def makeQuestion(request):
     que = QUESTION(poll_id=1, question_id=1, subject='설문1 질문1 입니다')
     que.save()
+
+    return JsonResponse({"test":"test"})
