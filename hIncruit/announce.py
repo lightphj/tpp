@@ -86,7 +86,7 @@ IoT
                         ,content_img = None
                         ,thumbnail = None
                         ,url = 'http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=6'
-                        ,create_date = '2019-02-01
+                        ,create_date = '2019-02-01'
                         ,expire_date = None
                         ,last_modify_date = '2019-02-01'
                         ,del_yn = 'N'
