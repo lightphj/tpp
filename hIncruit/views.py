@@ -246,7 +246,7 @@ def result(request):
         tempstr = ""
         count =1
         for a in answer:
-            tempstr = tempstr +str(count) + '. ' +a.val + '\r\n'
+            tempstr = tempstr +str(count) + '. ' +a.val + '  '
             count = count+1
 
 
