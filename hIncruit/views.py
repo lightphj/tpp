@@ -264,6 +264,6 @@ def makeAnnouncement(request):
                         ,create_date = '2019-11-01'
                         ,expire_date = '2020-12-31'
                         ,last_modify_date = '2019-11-01'
-                        del_yn = 'N'
+                        ,del_yn = 'N'
 )
     que.save()
