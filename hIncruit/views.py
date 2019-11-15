@@ -170,7 +170,7 @@ def Question(request):
                         )
 
 
-def endQuestion(request):
+def result(request):
     todo = '''
     1. 유저 데이터를 받는다 ( user: user_id)
     2. userid 로 가장 최근의 설문조사 결과를 토대로 맞는 직군을 선정한다. (아니면 clientExtra 로 설문번호도 받아올까?)
@@ -179,6 +179,110 @@ def endQuestion(request):
     2-1. iter를 다돌면, 가장 높은 점수를 찾고, 동일점수가 여러개일시 '~~~~' 의방법으로 order 해서 한줄만 가져온다.
     3. 가져온 직무와 그 내용을 뿌려주고, 다시 설문하기와 처음으로 돌아가기 quickRepl 을 준다.
     '''
+
+    # 변수선언
+    botUserKey = ''
+
+    jsonstr = ''
+
+    # payload 데이터를 받아온다.
+    json_str = ((request.body).decode('utf-8'))
+    received_json_data = json.loads(json_str)
+    try:
+        botUserKey = received_json_data['userRequest']['user']['id']
+    except TypeError:
+        logger.error("json data parising error")
+    except ValueError:
+        logger.error("json data parising error")
+    except NameError:
+        logger.error("json data parising error")
+    except SyntaxError:
+        logger.error("json data parising error")
+    #logger.info(type(received_json_data))
+    #print(json.dumps(received_json_data, indent=4, sort_keys=True))
+    # tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
+
+    try:
+        usr = USER.objects.get(user_id=botUserKey)
+    except(USER.DoesNotExist):
+        usr = USER(user_id=botUserKey)
+        usr.save()
+
+    #결과 가져오기
+    try:
+        # 해당 user 의 answer 가져오기
+        answer = ANSWER.objects.filter(user_id = usr)
+    except(USER.DoesNotExist):
+        # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
+        jsonstr = '''
+            {
+                "version": "2.0",
+                "template": {
+                    "outputs": [
+                        {
+                            "basicCard": {
+                                "title": " 결과 확인 실패 ",
+                                "description": "설문에 응답하신 이력이 없습니다",
+                                "buttons": [
+                                    {
+                                        "action": "block",
+                                        "messageText": "나의직무찾기",
+                                        "label": "나의직무찾기",
+                                        "blockId": "5dc910428192ac0001c5e495"
+                                    },{
+                                        "action": "message",
+                                        "messageText": "처음으로",
+                                        "label": "처음으로"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        '''
+    else:
+        # answer 가 있으면 +- 계산해서 결과보여주기. 지금은 그냥 아무거나 결과 보여주자
+        tempstr = ""
+        count =1
+        for a in answer:
+            tempstr = tempstr +str(count) + '. ' +a.val + '\r\n'
+            count = count+1
+
+
+        jsonstr = '''
+            {
+                "version": "2.0",
+                "template": {
+                    "outputs": [
+                        {
+                            "basicCard": {
+                                "title": " 당신의 직무는..",
+                                "description": "'''+ tempstr + '''",
+                                "buttons": [
+                                    {
+                                        "action": "message",
+                                        "messageText": "처음으로",
+                                        "label": "처음으로"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        '''
+    finally:
+        dictjson = json.loads(jsonstr)
+        return JsonResponse(dictjson)
+
+
+
+
+
+
+
+
 
 
 def makeQuestion(request):
