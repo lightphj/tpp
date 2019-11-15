@@ -125,7 +125,7 @@ def Question(request):
                                   "action": "block",
                                   "label": "Y",
                                   "messageText": "Y",
-                                  "blockId": "blockId",
+                                  "blockId": "5dc910428192ac0001c5e495",
                                   "extra": {
                                     "poll" : "''' + str(q.poll_id) + '''",
                                     "question" : "''' + str(q.question_id) + '''",
@@ -136,7 +136,7 @@ def Question(request):
                                   "action": "block",
                                   "label": "N",
                                   "messageText": "N",
-                                  "blockId": "blockId",
+                                  "blockId": "5dc910428192ac0001c5e495",
                                   "extra": {
                                     "poll" : "''' + str(q.poll_id) + '''",
                                     "question" : "''' + str(q.question_id) + '''",

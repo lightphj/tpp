@@ -44,7 +44,7 @@ class ANNOUNCE_DETAIL(models.Model):
 
 
 class USER(models.Model):
-    user_id = models.CharField(max_length=20,default='00000000', verbose_name='kakao chat receive id')
+    user_id = models.CharField(max_length=200,default='00000000', verbose_name='kakao chat receive id')
     regist_category = models.CharField(max_length=10, blank=True, null=True, verbose_name='직군 즐겨찾기')
     send_notice_yn = models.CharField(max_length=1, default='N')
     create_date = models.DateTimeField(default=timezone.now)
