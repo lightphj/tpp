@@ -11,83 +11,86 @@ logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def makeAnnouncement(request):
-    que = ANNOUNCEMENT(category = 'ICT'
-                        ,screening = '석사'
-                        ,title = '상시 인재DB 등록'
-                        ,content = '''인재DB에 지원서를 등록하시기 전 본인의 희망업무가 채용공고에 있는지 먼저 확인하시기 바랍니다.
-
-진행 중인 채용공고에 등록된 지원서가 우선적으로 검토됩니다.
-
- 
-
-
-현대오토에버는 우수인재 채용을 위해 상시 채용기간이 아닌 중에도 인재DB를 운영하고 있습니다.
-
-진행 중인 채용공고에는 해당되지 않지만 현대오토에버 입사를 희망하시는 분께서는
-
-현대오토에버 인재DB에 등록하십시오.
+    que = ANNOUNCEMENT(category = 'R&D'
+                        ,screening = '경력'
+                        ,title = 'R&D부문 경력사원 모집'
+                        ,content = '''R&D기획
+음성인식
+인공지능
+IoT
+차량보안'''
+                        ,sub_content = '''나. 공통자격요건
+  1)  해외여행 및 근무에 결격사유가 없는 자
+  2)  병역필 또는 면제자
+  3)  영어회화 가능자 우대
 
  
 
  
 
-인재DB에 본인 이력서를 등록해주시면 해당 이력서는 소중하게 보관되며
+다. 전형방법(각 단계별 합격자에 한하여 개별통보)
 
-해당 직무에 대한 소요가 있을 시 서류전형을 실시하여 합격자에게 연락을 드립니다.
+  1)  서류전형
+  2)  역량면접(PT/실무/필기/온라인 인성검사)
+  3)  임원면접
+  4)  신체검사 후 최종합격  
 
+
+라. 접수기간 및 접수방법
+  1) 접수기간 : 채용 시까지
+  2) 당사 채용 홈페이지를 통해 온라인 접수
  
-
-
-* 인재DB에 등록하셨더라도 진행 중인 채용공고에 자동으로 지원되지 않습니다.
-
-* 본인이 희망하는 직무를 선택할 수 없을 시에는 현대오토에버 인사팀으로 연락 주십시오.
-
-* 인재DB에 등록된 지원서는 반환이 불가능하니 신중하게 작성하여 주시기 바랍니다.
-
- 
-
-* 채용담당자 : recruit@hyundai-autoever.com/ 02-6296-4063​  '''
-                        ,sub_content = '''인재DB에 지원서를 등록하시기 전 본인의 희망업무가 채용공고에 있는지 먼저 확인하시기 바랍니다.
-
-진행 중인 채용공고에 등록된 지원서가 우선적으로 검토됩니다.
-
- 
-
-
-현대오토에버는 우수인재 채용을 위해 상시 채용기간이 아닌 중에도 인재DB를 운영하고 있습니다.
-
-진행 중인 채용공고에는 해당되지 않지만 현대오토에버 입사를 희망하시는 분께서는
-
-현대오토에버 인재DB에 등록하십시오.
-
- 
-
- 
-
-인재DB에 본인 이력서를 등록해주시면 해당 이력서는 소중하게 보관되며
-
-해당 직무에 대한 소요가 있을 시 서류전형을 실시하여 합격자에게 연락을 드립니다.
-
- 
-
-
-* 인재DB에 등록하셨더라도 진행 중인 채용공고에 자동으로 지원되지 않습니다.
-
-* 본인이 희망하는 직무를 선택할 수 없을 시에는 현대오토에버 인사팀으로 연락 주십시오.
-
-* 인재DB에 등록된 지원서는 반환이 불가능하니 신중하게 작성하여 주시기 바랍니다.
-
- 
-
-* 채용담당자 : recruit@hyundai-autoever.com/ 02-6296-4063​  '''
+마. 기타사항
+  1)  면접일시는 서류전형 합격자에 한하여 개별통보 예정입니다.
+  2)  제출된 서류는 지원이력 위해 3년간 보관 후 삭제되며, 요청시 반환받을 수 있습니다.
+  3)  국가보훈대상자 및 장애인은 관계법령에 의거 우대합니다.
+  4)  입사지원서 내용이 허위로 판명될 시에는 입사가 취소될 수 있습니다.​'''
                         ,content_img = None
                         ,thumbnail = None
-                        ,url = 'http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=6&p_year=2019&p_kisu=3'
-                        ,create_date = '2019-11-01'
-                        ,expire_date = '2020-12-31'
-                        ,last_modify_date = '2019-11-01'
+                        ,url = 'http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=5'
+                        ,create_date = '2019-11-15'
+                        ,expire_date = None
+                        ,last_modify_date = '2019-11-15'
                         ,del_yn = 'N'
 )
     que.save()
+
+    que1 = ANNOUNCEMENT(category = 'R&D'
+                        ,screening = '경력'
+                        ,title = '건설부문 경력사원 모집'
+                        ,content = '''공무
+시공'''
+                        ,sub_content = '''나. 공통자격요건
+  1)  해외여행 및 근무에 결격사유가 없는 자
+  2)  병역필 또는 면제자
+  3)  영어회화 가능자 우대
+
+ 
+
+다. 전형방법(각 단계별 합격자에 한하여 개별통보)
+
+  1)  서류전형
+  2)  역량(실무)면접, 인성면접 
+  3)  신체검사 후 최종합격
+
+
+라. 접수기간 및 접수방법
+  1) 접수기간 : 채용 시까지
+  2) 당사 채용 홈페이지를 통해 온라인 접수
+ 
+마. 기타사항
+  1)  면접일시는 서류전형 합격자에 한하여 개별통보 예정입니다.
+  2)  제출된 서류는 지원이력 위해 3년간 보관 후 삭제되며, 요청시 반환받을 수 있습니다.
+  3)  국가보훈대상자 및 장애인은 관계법령에 의거 우대합니다.
+  4)  입사지원서 내용이 허위로 판명될 시에는 입사가 취소될 수 있습니다.​ '''
+                        ,content_img = None
+                        ,thumbnail = None
+                        ,url = 'http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=6'
+                        ,create_date = '2019-02-01
+                        ,expire_date = None
+                        ,last_modify_date = '2019-02-01'
+                        ,del_yn = 'N'
+)
+    que1.save()
 
     return JsonResponse({"test":"test"})
