@@ -69,7 +69,7 @@ def Question(request):
 
 
         # ANSWER 객체 생성
-        ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=botUserKey, value=client_answer, create_date=timezone.now())
+        ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=usr, value=client_answer, create_date=timezone.now())
 
         # 새 객체 INSERT
         ans.save()
