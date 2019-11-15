@@ -52,15 +52,19 @@ def Question(request):
     print(json.dumps(received_json_data, indent=4, sort_keys=True))
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
 
+    try:
+        usr = USER.objects.get(user_id=botUserKey)
+    except(USER.DoesNotExist):
+        usr = USER(user_id=botUserKey)
+        usr.save()
+
     #받은 데이터가 있다면
     if client_answer is not None and client_answer != '':
         cur_q_id = int(cur_q_id_str)
         #받아온 데이터를 설문결과에 저장한다
 
         #User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
-        if not USER.objects.get(user_id = botUserKey).exists():
-            usr = USER(user_id = botUserKey)
-            usr.save()
+
 
 
 
