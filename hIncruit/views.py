@@ -98,7 +98,7 @@ def Question(request):
                                         "action": "block",
                                         "messageText": "결과보기",
                                         "label": "결과보기",
-                                        "blockId": "blockId"
+                                        "blockId": "5dce490cb617ea000107ba2f"
                                     }
                                 ]
                             }
