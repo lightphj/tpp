@@ -169,7 +169,7 @@ def Question(request):
     return JsonResponse(dictjson
                         )
 
-
+@csrf_exempt
 def result(request):
     todo = '''
     1. 유저 데이터를 받는다 ( user: user_id)
