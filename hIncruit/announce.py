@@ -89,3 +89,5 @@ def makeAnnouncement(request):
                         ,del_yn = 'N'
 )
     que.save()
+
+    return JsonResponse({"test":"test"})
