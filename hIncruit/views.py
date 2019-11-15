@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 
 @csrf_exempt
-def startQuestion(request):
+def Question(request):
 
 
     todo = '''
@@ -66,7 +66,29 @@ def startQuestion(request):
         len = QUESTION.objects.filter(poll_id = cur_poll_id).count()
         if len <= cur_q_id:
             #설문 끝났습니다
-            jsonstr=''
+            jsonstr='''
+                {
+                    "version": "2.0",
+                    "template": {
+                        "outputs": [
+                            {
+                                "basicCard": {
+                                    "title": " 모든 문항 완료 ",
+                                    "description": "모든 문항에 응답해 주셨습니다.",
+                                    "buttons": [
+                                        {
+                                            "action": "block",
+                                            "messageText": "결과보기",
+                                            "label": "결과보기"
+                                            "blockId": "blockId",
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            '''
         else:
             #설문 데이터를 가져온다.
 
@@ -122,7 +144,7 @@ def startQuestion(request):
     fulljson = jsonstr
 
     #logger.info("\n\n fulljson : \n" + fulljson)
-    # print(fulljson)
+    print(fulljson)
 
     dictjson = json.loads(fulljson)
 

@@ -22,7 +22,7 @@ class ANNOUNCEMENT(models.Model):
 
 
 class ANNOUNCE_DETAIL(models.Model):
-    announcement_id = models.ForeignKey(ANNOUNCEMENT, on_delete = models.CASCADE, verbos_name='채용공고id')
+    announcement_id = models.ForeignKey(ANNOUNCEMENT, on_delete = models.CASCADE, verbose_name='채용공고id')
     job = models.CharField(max_length=10, blank=True, null=True, verbose_name='직무코드')
     title = models.CharField(max_length=200, blank=True, null=True, verbose_name='제목')
     content = models.CharField(max_length=1000, blank=True, null=True, verbose_name='내용')
@@ -56,8 +56,8 @@ class USER(models.Model):
         return self.user_id
 
 class QUESTION(models.Model):
-    poll_id = models.IntegerField(max_length=4, default=-1, verbose_name='설문 ID')
-    question_id = models.IntegerField(max_length=4, default=-1, verbose_name='문항 ID')
+    poll_id = models.IntegerField( default=-1, verbose_name='설문 ID')
+    question_id = models.IntegerField( default=-1, verbose_name='문항 ID')
     subject = models.CharField(max_length=200, default='subject', verbose_name='질문')
     create_date = models.DateTimeField(default=timezone.now)
     expire_date = models.DateTimeField(null=True)
@@ -68,15 +68,15 @@ class QUESTION(models.Model):
         return self.subject
 
 class ANSWER(models.Model):
-    poll_id = models.IntegerField(max_length=4, default=-1, verbose_name='설문 ID')
-    question_id = models.IntegerField(max_length=4, default=-1, verbose_name='문항 ID')
-    user_id = models.ForeignKey(USER, on_delete=models.DO_NOTHING())
+    poll_id = models.IntegerField(default=-1, verbose_name='설문 ID')
+    question_id = models.IntegerField( default=-1, verbose_name='문항 ID')
+    user_id = models.ForeignKey(USER, on_delete=models.CASCADE)
     val = models.CharField(max_length=10, default='0', verbose_name='답변값')
     create_date = models.DateTimeField(default=timezone.now)
 
 class QUESTION_CATEGORY(models.Model):
-    poll_id = models.IntegerField(max_length=4, default=-1, verbose_name='설문 ID')
-    question_id = models.IntegerField(max_length=4, default=-1, verbose_name='문항 ID')
+    poll_id = models.IntegerField(default=-1, verbose_name='설문 ID')
+    question_id = models.IntegerField( default=-1, verbose_name='문항 ID')
     category = models.CharField(max_length=4, default=' ', verbose_name='직군')
     answer_yn = models.CharField(max_length=1, default=' ', verbose_name='Y/N 일때 +1')
 
