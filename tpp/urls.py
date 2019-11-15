@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 #from tppbot import views
 from hIncruit import views
+from hIncruit import announce
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,6 @@ urlpatterns = [
     #path('topfive', views.topFivePlace)
     path('question', views.Question),
     path('makeq', views.makeQuestion),
-    path('makeA',views.makeAnnouncement)
+    path('makeA',announce.makeAnnouncement)
 ]
 
