@@ -4,6 +4,7 @@ from django.db.models import Max
 from django.http import JsonResponse
 from hIncruit.models import *
 from django.utils import timezone
+from django.core.exceptions import MultipleObjectsReturned
 import json
 import logging
 logger = logging.getLogger(__name__)
@@ -52,6 +53,7 @@ def Question(request):
     print(json.dumps(received_json_data, indent=4, sort_keys=True))
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
 
+    # User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
     try:
         usr = USER.objects.get(user_id=botUserKey)
     except(USER.DoesNotExist):
@@ -62,17 +64,32 @@ def Question(request):
     if client_answer is not None and client_answer != '':
         cur_q_id = int(cur_q_id_str)
         #받아온 데이터를 설문결과에 저장한다
+        #이때 동일설문에 대해 한번 한 이력이 있을 수 있으므로, 우선 설문데이터를 가져와서 동일한게 있으면 update, 없으면 insert
 
-        #User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
+        try:
+            ans = ANSWER.objects.get(poll_id =cur_poll_id, question_id=cur_q_id, user_id =usr )
+        except ANSWER.DoesNotExist:
+            # 동일한 설문결과가 없으면
+            # ANSWER 객체 생성
+            print("First Answer")
+            ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=usr, val=client_answer,
+                         create_date=timezone.now())
+        except ANSWER.MultipleObjectsReturned:
+            print("multiple object in answer")
+        else:
+            # 동일한 설문결과가 있으면
+            print("update answer")
+            ans.val = client_answer
+            ans.create_date = timezone.now()
+        finally:
+            # 객체 INSERT
+            ans.save()
 
 
 
 
-        # ANSWER 객체 생성
-        ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=usr, val=client_answer, create_date=timezone.now())
 
-        # 새 객체 INSERT
-        ans.save()
+
     else:
         cur_q_id = 0
         cur_poll_id_dict = QUESTION.objects.all().aggregate(Max('poll_id'))
@@ -169,7 +186,7 @@ def Question(request):
     return JsonResponse(dictjson
                         )
 
-
+@csrf_exempt
 def result(request):
     todo = '''
     1. 유저 데이터를 받는다 ( user: user_id)
@@ -212,7 +229,7 @@ def result(request):
     try:
         # 해당 user 의 answer 가져오기
         answer = ANSWER.objects.filter(user_id = usr)
-    except(USER.DoesNotExist):
+    except(ANSWER.DoesNotExist):
         # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
         jsonstr = '''
             {
@@ -246,7 +263,7 @@ def result(request):
         tempstr = ""
         count =1
         for a in answer:
-            tempstr = tempstr +str(count) + '. ' +a.val + '\r\n'
+            tempstr = tempstr +str(count) + '. ' +a.val + '  '
             count = count+1
 
 
@@ -273,6 +290,7 @@ def result(request):
             }
         '''
     finally:
+        print(jsonstr)
         dictjson = json.loads(jsonstr)
         return JsonResponse(dictjson)
 
