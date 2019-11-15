@@ -30,6 +30,7 @@ urlpatterns = [
     #path('topfive', views.topFivePlace)
     path('question', views.Question),
     path('makeq', views.makeQuestion),
+    path('result', views.result),
     path('makeA',announce.makeAnnouncement)
 ]
 
