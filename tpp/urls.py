@@ -28,6 +28,7 @@ urlpatterns = [
     #path('list', views.list),
     #path('topfive', views.topFivePlace)
     path('question', views.Question),
-    path('makeq', views.makeQuestion)
+    path('makeq', views.makeQuestion),
+    path('makeA',views.makeAnnouncement)
 ]
 
