@@ -4,6 +4,7 @@ from django.db.models import Max
 from django.http import JsonResponse
 from hIncruit.models import *
 from django.utils import timezone
+from django.core.exceptions import MultipleObjectsReturned
 import json
 import logging
 logger = logging.getLogger(__name__)
@@ -67,13 +68,17 @@ def Question(request):
 
         try:
             ans = ANSWER.objects.get(poll_id =cur_poll_id, question_id=cur_q_id, user_id =usr )
-        except(ANSWER.DoesNotExist):
+        except ANSWER.DoesNotExist:
             # 동일한 설문결과가 없으면
             # ANSWER 객체 생성
+            print("First Answer")
             ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=usr, val=client_answer,
                          create_date=timezone.now())
+        except ANSWER.MultipleObjectsReturned:
+            print("multiple object in answer")
         else:
             # 동일한 설문결과가 있으면
+            print("update answer")
             ans.val = client_answer
             ans.create_date = timezone.now()
         finally:
