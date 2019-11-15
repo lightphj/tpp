@@ -273,6 +273,7 @@ def result(request):
             }
         '''
     finally:
+        print(jsonstr)
         dictjson = json.loads(jsonstr)
         return JsonResponse(dictjson)
 
