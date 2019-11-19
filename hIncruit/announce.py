@@ -99,16 +99,17 @@ IoT
 def makeAnnouncementDetail(request):
 
     try:
-        usr = ANNOUNCEMENT.objects.get(id='6)
+        usr = ANNOUNCEMENT.objects.get(id='6')
     except(USER.DoesNotExist):
         usr = ANNOUNCEMENT(id='6')
         usr.save()
 
     que = ANNOUNCE_DETAIL(
                         job = '건설'
-                        ,title ='공무'
-                        ,content='국내 건설현장 전력설비공사 공부'
-                        ,sub_content='복선전철 전력설비 신설공사 공무'
+                        ,title ='시공'
+                        ,content='국내 건설현장 통신공사 시공 지원 총괄/관리 (PM)'
+                        ,sub_content='''- 아파트 통신공사 시공관리 총괄
+                        - 발주처 협의, 대관/행정업무, 공사/공정관리, 인원관리 등'''
                         ,content_img=None
                         ,thumbnail=None
                         ,url='http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=6'
@@ -120,7 +121,7 @@ def makeAnnouncementDetail(request):
                         ,expire_date='2019-12-31'
                         ,last_modify_date='2019-02-01'
                         ,del_yn='N'
-                        ,announcemente_id=usr
+                        ,announcement_id=usr
 )
     que.save()
     return JsonResponse({"test":"test"})
@@ -133,19 +134,19 @@ def announcementList(request):
     #
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
-    #category = ''
-    #try:
-    #    category = received_json_data['action']['params']['category']
-    #except TypeError:
-    #    logger.error("json data parising error")
-    #except ValueError:
-    #    logger.error("json data parising error")
-    #except NameError:
-    #    logger.error("json data parising error")
-    #except SyntaxError:
-    #    logger.error("json data parising error")
+    '''category_id = ''
+    try:
+        category_id = received_json_data['action']['params']['category']
+    except TypeError:
+        logger.error("json data parising error")
+    except ValueError:
+        logger.error("json data parising error")
+    except NameError:
+        logger.error("json data parising error")
+    except SyntaxError:
+        logger.error("json data parising error")
     logger.info(type(received_json_data))
-    #print(json.dumps(received_json_data, indent=4, sort_keys=True))
+    print(json.dumps(received_json_data, indent=4, sort_keys=True))'''
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
     tfp = ANNOUNCEMENT.objects.filter(del_yn='N').order_by('-expire_date')
     isFirst = 'y'
@@ -172,15 +173,15 @@ def announcementList(request):
         jsonstr = jsonstr + '''
             {
                 "title": "''' + p.title + '''",
-                "description": " '''+ p.phone +''' ",
+                "description": " '''+ p.content +''' ",
                 "thumbnail": {
-                    "imageUrl": "http://52.78.124.188:8000/static/images/irene.jpg"
+                    ""
                 },
                 "buttons": [
                     {
                         "action": "webLink",
-                        "label": "''' + p.road_address_name +'''",
-                        "webLinkUrl": "'''+p.place_url+'''"
+                        "label": "상세보기",
+                        "webLinkUrl": "'''+p.url+'''"
                     }
                 ]
             }
