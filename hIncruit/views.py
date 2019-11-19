@@ -354,12 +354,12 @@ def getfitcategory(poll_id,usr):
                             main_cat = category[i].category_cd
                         break
 
-    for c in category:
-        print(c.category_nm + ' ' + c.total)
+    #for c in category:
+    #    print(c.category_nm + ' ' + c.total)
 
     try:
         main_cat_name = category.filter(category_cd = main_cat)[0].category_nm
     except(ANSWER.DoesNotExist):
-        main_cat_name = '맞는직군이없습니다ㅠㅜ'
+        main_cat_name = 'No Matching Job'
     finally:
         return main_cat_name
