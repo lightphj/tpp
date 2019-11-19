@@ -146,33 +146,6 @@ def announcementList(request):
 
     jsonrepl = ''
 
-    #replK = ''',{
-    #                "label":"한식",
-    #                "action":"message",
-    #                "messageText":"한식"
-    #            }'''
-    #replW = ''',{
-    #                "label":"양식",
-    #                "action":"message",
-    #                "messageText":"양식"
-    #            }'''
-    #replC = ''',{
-    #                "label":"중식",
-    #                "action":"message",
-    #                "messageText":"중식"
-    #            }'''
-            
-    #logger.info(category)
-    #logger.info(type(category))
-    '''
-    if category == '01' :
-        jsonrepl = replK+replC
-    elif category == '02' :
-        jsonrepl = replK+replW
-    else:
-        jsonrepl = replC+replW
-    '''
-
     jsonheader = '''{
 
         "version": "2.0",
