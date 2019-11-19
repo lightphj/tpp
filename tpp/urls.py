@@ -31,6 +31,7 @@ urlpatterns = [
     path('question', views.Question),
     path('makeq', views.makeQuestion),
     path('result', views.result),
-    path('makeA',announce.makeAnnouncement)
+    path('makeA',announce.makeAnnouncement),
+    path('makeAD',announce.makeAnnouncementDetail)
 ]
 

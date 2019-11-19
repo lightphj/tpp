@@ -95,6 +95,36 @@ IoT
 
     return JsonResponse({"test":"test"})
 
+@csrf_exempt
+def makeAnnouncementDetail(request):
+
+    try:
+        usr = ANNOUNCEMENT.objects.get(id='6)
+    except(USER.DoesNotExist):
+        usr = ANNOUNCEMENT(id='6')
+        usr.save()
+
+    que = ANNOUNCE_DETAIL(
+                        job = '건설'
+                        ,title ='공무'
+                        ,content='국내 건설현장 전력설비공사 공부'
+                        ,sub_content='복선전철 전력설비 신설공사 공무'
+                        ,content_img=None
+                        ,thumbnail=None
+                        ,url='http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=6'
+                        ,rec_person_num='1'
+                        ,from_date='2019-02-01'
+                        ,to_date='2019-12-31'
+                        ,howto=''
+                        ,create_date='2019-02-01'
+                        ,expire_date='2019-12-31'
+                        ,last_modify_date='2019-02-01'
+                        ,del_yn='N'
+                        ,announcemente_id=usr
+)
+    que.save()
+    return JsonResponse({"test":"test"})
+
 
 @csrf_exempt
 def announcementList(request):
@@ -117,38 +147,11 @@ def announcementList(request):
     logger.info(type(received_json_data))
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
-    tfp = hIncruit_announcement.objects.filter(del_yn='N').order_by('-expire_date')
+    tfp = ANNOUNCEMENT.objects.filter(del_yn='N').order_by('-expire_date')
     isFirst = 'y'
     jsonstr = ''
 
     jsonrepl = ''
-'''
-    replK = ''',{
-                    "label":"한식",
-                    "action":"message",
-                    "messageText":"한식"
-                }'''
-    replW = ''',{
-                    "label":"양식",
-                    "action":"message",
-                    "messageText":"양식"
-                }'''
-    replC = ''',{
-                    "label":"중식",
-                    "action":"message",
-                    "messageText":"중식"
-                }'''
-                '''
-    #logger.info(category)
-    #logger.info(type(category))
-    '''
-    if category == '01' :
-        jsonrepl = replK+replC
-    elif category == '02' :
-        jsonrepl = replK+replW
-    else:
-        jsonrepl = replC+replW
-    '''
 
     jsonheader = '''{
 
