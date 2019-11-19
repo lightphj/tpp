@@ -225,10 +225,15 @@ def result(request):
         usr = USER(user_id=botUserKey)
         usr.save()
 
+    cur_poll_id=0
+
     #결과 가져오기
     try:
-        # 해당 user 의 answer 가져오기
-        answer = ANSWER.objects.filter(user_id = usr)
+        #먼저 해당 유저의 max poll id 를 가져와야 한다.
+        max_poll_id_dict = ANSWER.objects.all().aggregate(Max('poll_id'))
+        cur_poll_id = int(max_poll_id_dict['poll_id__max'])
+        # 해당 user 의 최근 poll에 대해 answer 가져오기
+        answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
     except(ANSWER.DoesNotExist):
         # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
         jsonstr = '''
@@ -259,7 +264,29 @@ def result(request):
             }
         '''
     else:
-        # answer 가 있으면 +- 계산해서 결과보여주기. 지금은 그냥 아무거나 결과 보여주자
+        # 먼저 딕셔너리에 카테고리,숫자0을 엮어서 가져오고
+        # for문 돌면서 카테고리에 하나씩 더하고
+        # 더할때마다 전광판을 확인해서 내가 더 크면 전광판에 키/값 쌍을 적고
+        # 다 돌면 전광판의 키를 return 하면 끝
+        try:
+
+            #c_list=[]
+            v_list=[]
+
+            # 먼저 카테고리를 가져오고 list 하나에 카테고리코드,값을 담는다
+
+            category = CATEGORY.objects.filter(del_yn = 'N')
+
+            for c in category:
+                print(c)
+
+
+            cur_poll_id = int(max_poll_id_dict['poll_id__max'])
+            # 해당 user 의 최근 poll에 대해 answer 가져오기
+            answer = ANSWER.objects.filter(user_id=usr, poll_id=cur_poll_id)
+        except(ANSWER.DoesNotExist):
+            v_list=[0]
+
         tempstr = ""
         count =1
         for a in answer:
@@ -309,3 +336,61 @@ def makeQuestion(request):
 
     return JsonResponse({"test":"test"})
 
+def category(request):
+    que = CATEGORY(category_cd=1, category_nm='ADM')
+    que.save()
+
+    return JsonResponse({"test":"test"})
+
+def question_category(request):
+    que = QUESTION_CATEGORY(poll_id=1, question_id=1, category='3', answer_yn='Y')
+    que.save()
+
+    return JsonResponse({"test":"test"})
+
+def test(request):
+    category = CATEGORY.objects.filter(del_yn='N').extra(select = {'total': 0})
+    json=''
+    main_cat =0
+    main_cat_val =0
+    #for c in category:
+    #    print(c.category_cd + ' ' + c.category_nm + ' ' + str(c.total))
+
+    usr = USER.objects.get(id=4)
+    cur_poll_id ='1'
+
+    answer = ANSWER.objects.filter(user_id=usr, poll_id=cur_poll_id)
+    #print(answer[0].val)
+    for a in answer:
+        try:
+            qcs = QUESTION_CATEGORY.objects.filter(poll_id = a.poll_id, question_id = a.question_id, answer_yn = a.val)
+        except(ANSWER.DoesNotExist):
+            print('DoesNotExist err')
+        else:
+            #print(qcs.count())
+            for qc in qcs:
+            #    templist = (item for item in category if item['category_cd'] == qc.category)
+            #    tempdict = next(templist,False)
+            #    tempdict['total'] = str(int(tempdict['total'])+1)
+                #print(qc)
+                for i in range(len(category)):
+                    print('same ? : ' + category[i].category_cd + ' == ' + qc.category)
+                    if category[i].category_cd == qc.category:
+                        addnum = category[i].total + 1
+                        category[i].total = addnum
+                        if(addnum >= main_cat_val ):
+                            main_cat_val = addnum
+                            main_cat = category[i].category_cd
+                        break
+
+
+
+
+    for c in category:
+        print(c.category_cd + ' ' + c.category_nm + ' ' + str(c.total))
+
+    print(main_cat)
+    print(main_cat_val)
+
+
+    return JsonResponse({"a":"b"})
