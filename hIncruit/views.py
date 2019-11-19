@@ -354,8 +354,8 @@ def getfitcategory(poll_id,usr):
                             main_cat = category[i].category_cd
                         break
 
-    #for c in category:
-    #    print(c.category_nm + ' ' + c.total)
+    for c in category:
+        print(c.category_nm + ' ' + c.total)
 
     try:
         main_cat_name = category.filter(category_cd = main_cat)[0].category_nm
