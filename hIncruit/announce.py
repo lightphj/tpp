@@ -97,7 +97,14 @@ IoT
 
 @csrf_exempt
 def makeAnnouncementDetail(request):
-    que = ANNOUNCEMENT(
+
+    try:
+        usr = ANNOUNCEMENT.objects.get(id='6)
+    except(USER.DoesNotExist):
+        usr = ANNOUNCEMENT(id='6')
+        usr.save()
+
+    que = ANNOUNCE_DETAIL(
                         job = '건설'
                         ,title ='공무'
                         ,content='국내 건설현장 전력설비공사 공부'
@@ -113,7 +120,7 @@ def makeAnnouncementDetail(request):
                         ,expire_date='2019-12-31'
                         ,last_modify_date='2019-02-01'
                         ,del_yn='N'
-                        ,announcemente_id_id='6'
+                        ,announcemente_id=usr
 )
     que.save()
     return JsonResponse({"test":"test"})
