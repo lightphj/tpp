@@ -113,7 +113,7 @@ def makeAnnouncementDetail(request):
                         ,expire_date='2019-12-31'
                         ,last_modify_date='2019-02-01'
                         ,del_yn='N'
-                        announcemente_id_id='6'
+                        ,announcemente_id_id='6'
 )
     que.save()
     return JsonResponse({"test":"test"})
