@@ -133,7 +133,7 @@ def announcementList(request):
     # 채용공고 조회 (캐로셀 return)
     #
     json_str = ((request.body).decode('utf-8'))
-    received_json_data = json.loads(json_str)
+    #received_json_data = json.loads(json_str)
     '''category_id = ''
     try:
         category_id = received_json_data['action']['params']['category']
@@ -149,6 +149,8 @@ def announcementList(request):
     print(json.dumps(received_json_data, indent=4, sort_keys=True))'''
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
     tfp = ANNOUNCEMENT.objects.filter(del_yn='N').order_by('-expire_date')
+    
+    #Author.objects.update(name=Trim('name'))
     isFirst = 'y'
     jsonstr = ''
 
@@ -175,7 +177,7 @@ def announcementList(request):
                 "title": "''' + p.title + '''",
                 "description": " '''+ p.content +''' ",
                 "thumbnail": {
-                    ""
+                    "imageUrl": "http://52.78.124.188:8000/static/images/irene.jpg"
                 },
                 "buttons": [
                     {
@@ -187,7 +189,7 @@ def announcementList(request):
             }
         '''
 
-    #logger.info(jsonrepl)
+    logger.info(jsonrepl)
     jsonfooter = '''
                         ]
                     }
@@ -205,11 +207,11 @@ def announcementList(request):
         }   
     }'''
 
-    #logger.info("\n\n jsonfooter : \n" + jsonfooter)
+    logger.info("\n\n jsonfooter : \n" + jsonfooter)
     fulljson = jsonheader+jsonstr+jsonfooter
 
     logger.info("\n\n fulljson : \n" + fulljson)
-    #print(fulljson)
+    print(fulljson)
 
     dictjson = json.loads(fulljson)
 
