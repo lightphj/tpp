@@ -233,8 +233,10 @@ def result(request):
         max_poll_id_dict = ANSWER.objects.all().aggregate(Max('poll_id'))
         cur_poll_id = int(max_poll_id_dict['poll_id__max'])
         # 해당 user 의 최근 poll에 대해 answer 가져오기
+        print(cur_poll_id)
         answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
     except(ANSWER.DoesNotExist):
+        print('except')
         # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
         jsonstr = '''
             {
@@ -264,6 +266,7 @@ def result(request):
             }
         '''
     else:
+        print('else')
         # 먼저 카테고리,숫자0을 엮어서 가져오고
         # for문 돌면서 카테고리에 하나씩 더하고
         # 더할때마다 전광판을 확인해서 내가 더 크면 전광판에 키/값 쌍을 적고
@@ -331,7 +334,8 @@ def getfitcategory(poll_id,usr):
     main_cat =0
     main_cat_val =0
 
-
+    print(poll_id)
+    print(usr.user_id)
     answer = ANSWER.objects.filter(user_id=usr, poll_id=poll_id)
     for a in answer:
         try:
@@ -350,10 +354,12 @@ def getfitcategory(poll_id,usr):
                             main_cat = category[i].category_cd
                         break
 
+    for c in category:
+        print(c.category_nm + ' ' + str(c.total))
 
     try:
         main_cat_name = category.filter(category_cd = main_cat)[0].category_nm
     except(ANSWER.DoesNotExist):
-        main_cat_name = '맞는직군이없습니다ㅠㅜ'
+        main_cat_name = 'No Matching Job'
     finally:
         return main_cat_name
