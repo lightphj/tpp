@@ -102,8 +102,8 @@ def makeAnnouncementDetail(request):
                         ,title ='공무'
                         ,content='국내 건설현장 전력설비공사 공부'
                         ,sub_content='복선전철 전력설비 신설공사 공무'
-                        ,content_img=''
-                        ,thumbnail=''
+                        ,content_img=None
+                        ,thumbnail=None
                         ,url='http://recruit.hyundai-autoever.com/hfront/RecruitManage.do?cmd=mobileRecruitShowForm&p_hgrcode=1&p_empgubun=4&p_year=2019&p_kisu=6'
                         ,rec_person_num='1'
                         ,from_date='2019-02-01'
