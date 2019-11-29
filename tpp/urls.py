@@ -18,6 +18,7 @@ from django.urls import path
 #from tppbot import views
 from hIncruit import views
 from hIncruit import announce
+from hIncruit import stocks
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('result', views.result),
     path('makeA',announce.makeAnnouncement),
     path('makeAD',announce.makeAnnouncementDetail),
-    path('AList',announce.announcementList)
+    path('AList',announce.announcementList),
+    path('Stock',stocks.StockData)
 ]
 
