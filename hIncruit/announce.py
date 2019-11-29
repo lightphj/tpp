@@ -171,9 +171,9 @@ def announcementList(request):
         jsonstr = jsonstr + '''
             {
                 "title": "''' + p.title + '''",
-                "description": " '''+ p.content +''' ",
+                "description": "'''+ p.content +'''",
                 "thumbnail": {
-                    "imageUrl": " '''+ imageUrl_bind +''' "
+                    "imageUrl": "'''+ imageUrl_bind +'''"
                 },
                 "buttons": [
                     {
