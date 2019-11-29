@@ -221,53 +221,25 @@ def result(request):
     #logger.info(type(received_json_data))
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     # tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
-
     try:
         usr = USER.objects.get(user_id=botUserKey)
     except(USER.DoesNotExist):
         usr = USER(user_id=botUserKey)
         usr.save()
-
+    #print(usr['user_id'])
     cur_poll_id=0
 
     #결과 가져오기
     try:
         #먼저 해당 유저의 max poll id 를 가져와야 한다.
-        max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date').first()
-        cur_poll_id = int(max_poll_id_dict['poll_id'])
+        max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date')[0]
+        #print(max_poll_id_dict['poll_id'])
+        cur_poll_id = int(max_poll_id_dict.poll_id)
         # 해당 user 의 최근 poll에 대해 answer 가져오기
         print(cur_poll_id)
-        answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
-    except(ANSWER.DoesNotExist):
-        print('except')
-        # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
-        jsonstr = '''
-            {
-                "version": "2.0",
-                "template": {
-                    "outputs": [
-                        {
-                            "basicCard": {
-                                "title": " 결과 확인 실패 ",
-                                "description": "설문에 응답하신 이력이 없습니다",
-                                "buttons": [
-                                    {
-                                        "action": "block",
-                                        "messageText": "나의직무찾기",
-                                        "label": "나의직무찾기",
-                                        "blockId": "5dc910428192ac0001c5e495"
-                                    },{
-                                        "action": "message",
-                                        "messageText": "처음으로",
-                                        "label": "처음으로"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        '''
+    except Exception as e:
+        print( e)
+        print('what the fuck')
     else:
         print('else')
         # 먼저 카테고리,숫자0을 엮어서 가져오고
