@@ -243,6 +243,11 @@ def result(request):
                                         "action": "message",
                                         "messageText": "처음으로",
                                         "label": "처음으로"
+                                    },
+                                    {
+                                        "action": "message",
+                                        "messageText": "채용공고",
+                                        "label": "채용공고"
                                     }
                                 ]
                             }
