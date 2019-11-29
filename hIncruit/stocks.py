@@ -1,4 +1,5 @@
 import pandas as pd
+from django.shortcuts import render
 
 def get_url(item_name, code_df): 
     code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False) 
@@ -23,11 +24,12 @@ def StockData(request):
     # 일자 데이터를 담을 df라는 DataFrame 정의 
     df = pd.DataFrame() 
     # 1페이지에서 20페이지의 데이터만 가져오기 
-    for page in range(1, 21): 
+    for page in range(1, 2): 
         pg_url = '{url}&page={page}'.format(url=url, page=page) 
         df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True) 
 
     # df.dropna()를 이용해 결측값 있는 행 제거 
     df = df.dropna() 
+    msg = df.head()
     # 상위 5개 데이터 확인하기
-    return df.head()
+    return render(request, 'index.html', {'message': msg})
