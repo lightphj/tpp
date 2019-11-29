@@ -234,12 +234,11 @@ def result(request):
     #결과 가져오기
     try:
         #먼저 해당 유저의 max poll id 를 가져와야 한다.
-        max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date').first()
+        max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date')[0]
         print(max_poll_id_dict['poll_id'])
         cur_poll_id = int(max_poll_id_dict['poll_id'])
         # 해당 user 의 최근 poll에 대해 answer 가져오기
         print(cur_poll_id)
-        answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
     except Exception as e:
         print( e)
         print('what the fuck')
