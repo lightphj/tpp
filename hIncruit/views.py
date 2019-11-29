@@ -221,14 +221,11 @@ def result(request):
     #logger.info(type(received_json_data))
     #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     # tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
-    print('aa')
     try:
         usr = USER.objects.get(user_id=botUserKey)
     except(USER.DoesNotExist):
         usr = USER(user_id=botUserKey)
         usr.save()
-    print(usr)
-    print(type(usr))
     #print(usr['user_id'])
     cur_poll_id=0
 
@@ -236,8 +233,8 @@ def result(request):
     try:
         #먼저 해당 유저의 max poll id 를 가져와야 한다.
         max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date')[0]
-        print(max_poll_id_dict['poll_id'])
-        cur_poll_id = int(max_poll_id_dict['poll_id'])
+        #print(max_poll_id_dict['poll_id'])
+        cur_poll_id = int(max_poll_id_dict.poll_id)
         # 해당 user 의 최근 poll에 대해 answer 가져오기
         print(cur_poll_id)
     except Exception as e:
