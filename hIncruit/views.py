@@ -227,7 +227,8 @@ def result(request):
     except(USER.DoesNotExist):
         usr = USER(user_id=botUserKey)
         usr.save()
-
+    print(usr)
+    print(type(usr))
     print(usr['user_id'])
     cur_poll_id=0
 
