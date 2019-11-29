@@ -17,11 +17,16 @@ def StockData(request):
     code_df = code_df[['회사명', '종목코드']] 
     # 한글로된 컬럼명을 영어로 바꿔준다. 
     code_df = code_df.rename(columns={'회사명': 'name', '종목코드': 'code'})
+    code_df.head()
 
     # 신라젠의 일자데이터 url 가져오기 
     item_name='현대오토에버'
     url = get_url(item_name, code_df) 
+    
+    print(url)
     # 일자 데이터를 담을 df라는 DataFrame 정의 
+    url='https://finance.naver.com/item/sise_day.nhn?code=307950'
+
     df = pd.DataFrame() 
     # 1페이지에서 20페이지의 데이터만 가져오기 
     for page in range(1, 2): 
@@ -30,6 +35,7 @@ def StockData(request):
 
     # df.dropna()를 이용해 결측값 있는 행 제거 
     df = df.dropna() 
-    msg = df.head()
+    msg = df['종가'][1].astype(int)
+    #msg = df
     # 상위 5개 데이터 확인하기
     return render(request, 'index.html', {'message': msg})
