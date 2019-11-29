@@ -229,7 +229,7 @@ def result(request):
         usr.save()
     print(usr)
     print(type(usr))
-    print(usr['user_id'])
+    #print(usr['user_id'])
     cur_poll_id=0
 
     #결과 가져오기
