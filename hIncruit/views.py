@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.core.exceptions import MultipleObjectsReturned
 import json
 import logging
+import random
+
 logger = logging.getLogger(__name__)
 # Create your views here.
 
@@ -93,9 +95,10 @@ def Question(request):
     else:
         cur_q_id = 0
         cur_poll_id_dict = QUESTION.objects.all().aggregate(Max('poll_id'))
-        cur_poll_id = int(cur_poll_id_dict['poll_id__max'])
+        max_id = int(cur_poll_id_dict['poll_id__max'])
+        cur_poll_id = random.randint(1, max_id)
         print(cur_poll_id)
-        print(type(cur_poll_id))
+        #print(type(cur_poll_id))
 
     # 전체 문항수를 가져와서 문항수=번호 이면 basicCard 로 설문이 끝났음을 알리고, endQuestion block 으로 연결하는 버튼을 제공하는 json 작성
     len = QUESTION.objects.filter(poll_id = cur_poll_id).count()
@@ -230,8 +233,8 @@ def result(request):
     #결과 가져오기
     try:
         #먼저 해당 유저의 max poll id 를 가져와야 한다.
-        max_poll_id_dict = ANSWER.objects.all().aggregate(Max('poll_id'))
-        cur_poll_id = int(max_poll_id_dict['poll_id__max'])
+        max_poll_id_dict = ANSWER.objects.filter(user_id = usr).order_by('-create_date').first()
+        cur_poll_id = int(max_poll_id_dict['poll_id'])
         # 해당 user 의 최근 poll에 대해 answer 가져오기
         print(cur_poll_id)
         answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
