@@ -268,6 +268,8 @@ def result(request):
                 }
             }
         '''
+    except Exception as e:
+        print( '%s (%s)' % (e.message, type(e)))
     else:
         print('else')
         # 먼저 카테고리,숫자0을 엮어서 가져오고
