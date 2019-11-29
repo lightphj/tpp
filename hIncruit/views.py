@@ -16,17 +16,6 @@ logger = logging.getLogger(__name__)
 def Question(request):
 
 
-    todo = '''
-    1. 데이터를 받는다 ( user: user_id, clientExtra : 설문ID,문항번호,답변YN)
-    2. 받은 데이터를 DB저장
-    3. 설문ID와 문항번호를 이용해서 다음 설문데이터를 꺼내서 json 작성
-    3-1. 마지막 설문이었다면, 챗봇에 결과보기라는 버튼을 주고 눌렀을때 설문결과페이지로 가는 json 작성
-    4. 챗봇에 json 전달
-    5. 각 설문의 답변 버튼에 extra 로 설문id,문항번호,답변YN 값이 들어가있어야하고
-    6. 각 답변은 모두 클릭시 현재 블럭ID로 재연결 해야한다.
-    
-    '''
-
     #변수선언
     botUserKey = ''
     cur_poll_id = ''
@@ -52,7 +41,7 @@ def Question(request):
     except SyntaxError:
         logger.error("json data parising error")
     logger.info(type(received_json_data))
-    print(json.dumps(received_json_data, indent=4, sort_keys=True))
+    #print(json.dumps(received_json_data, indent=4, sort_keys=True))
     #tfp = place.objects.filter(category_group_code=category).order_by('distance')[:5]
 
     # User 객체가 없으면 User 를 먼저 만들고 insert 해야한다.
@@ -73,14 +62,14 @@ def Question(request):
         except ANSWER.DoesNotExist:
             # 동일한 설문결과가 없으면
             # ANSWER 객체 생성
-            print("First Answer")
+            #print("First Answer")
             ans = ANSWER(poll_id=cur_poll_id, question_id=cur_q_id, user_id=usr, val=client_answer,
                          create_date=timezone.now())
         except ANSWER.MultipleObjectsReturned:
             print("multiple object in answer")
         else:
             # 동일한 설문결과가 있으면
-            print("update answer")
+            #print("update answer")
             ans.val = client_answer
             ans.create_date = timezone.now()
         finally:
@@ -97,7 +86,7 @@ def Question(request):
         cur_poll_id_dict = QUESTION.objects.all().aggregate(Max('poll_id'))
         max_id = int(cur_poll_id_dict['poll_id__max'])
         cur_poll_id = random.randint(1, max_id)
-        print(cur_poll_id)
+        #print(cur_poll_id)
         #print(type(cur_poll_id))
 
     # 전체 문항수를 가져와서 문항수=번호 이면 basicCard 로 설문이 끝났음을 알리고, endQuestion block 으로 연결하는 버튼을 제공하는 json 작성
@@ -191,14 +180,6 @@ def Question(request):
 
 @csrf_exempt
 def result(request):
-    todo = '''
-    1. 유저 데이터를 받는다 ( user: user_id)
-    2. userid 로 가장 최근의 설문조사 결과를 토대로 맞는 직군을 선정한다. (아니면 clientExtra 로 설문번호도 받아올까?)
-    2-1. 섬룬조사 결과를 iter 하면서 해당 문항과 YN 의 답변이 일치하는 question_category 를 찾아서 +1 한다 
-    2-1-1. 그러려면 dict 로 먼저 전체직군,값(초기값 0) 을 가져와야한다.
-    2-1. iter를 다돌면, 가장 높은 점수를 찾고, 동일점수가 여러개일시 '~~~~' 의방법으로 order 해서 한줄만 가져온다.
-    3. 가져온 직무와 그 내용을 뿌려주고, 다시 설문하기와 처음으로 돌아가기 quickRepl 을 준다.
-    '''
 
     # 변수선언
     botUserKey = ''
@@ -236,12 +217,11 @@ def result(request):
         #print(max_poll_id_dict['poll_id'])
         cur_poll_id = int(max_poll_id_dict.poll_id)
         # 해당 user 의 최근 poll에 대해 answer 가져오기
-        print(cur_poll_id)
+        #print(cur_poll_id)
     except Exception as e:
         print( e)
-        print('what the fuck')
     else:
-        print('else')
+        #print('else')
         # 먼저 카테고리,숫자0을 엮어서 가져오고
         # for문 돌면서 카테고리에 하나씩 더하고
         # 더할때마다 전광판을 확인해서 내가 더 크면 전광판에 키/값 쌍을 적고
@@ -263,6 +243,11 @@ def result(request):
                                         "action": "message",
                                         "messageText": "처음으로",
                                         "label": "처음으로"
+                                    },
+                                    {
+                                        "action": "message",
+                                        "messageText": "채용공고",
+                                        "label": "채용공고"
                                     }
                                 ]
                             }
@@ -309,8 +294,8 @@ def getfitcategory(poll_id,usr):
     main_cat =0
     main_cat_val =0
 
-    print(poll_id)
-    print(usr.user_id)
+    #print(poll_id)
+    #print(usr.user_id)
     answer = ANSWER.objects.filter(user_id=usr, poll_id=poll_id)
     for a in answer:
         try:
@@ -320,7 +305,7 @@ def getfitcategory(poll_id,usr):
         else:
             for qc in qcs:
                 for i in range(len(category)):
-                    print('same ? : ' + category[i].category_cd + ' == ' + qc.category)
+                    #print('same ? : ' + category[i].category_cd + ' == ' + qc.category)
                     if category[i].category_cd == qc.category:
                         addnum = category[i].total + 1
                         category[i].total = addnum
