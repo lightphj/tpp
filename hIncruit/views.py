@@ -238,38 +238,8 @@ def result(request):
         # 해당 user 의 최근 poll에 대해 answer 가져오기
         print(cur_poll_id)
         answer = ANSWER.objects.filter(user_id = usr,poll_id = cur_poll_id)
-    except(ANSWER.DoesNotExist):
-        print('except')
-        # answer 가 없으면 질문내역이 없습니다 띄우고 나의직무찾기,처음으로 가기 버튼 제공
-        jsonstr = '''
-            {
-                "version": "2.0",
-                "template": {
-                    "outputs": [
-                        {
-                            "basicCard": {
-                                "title": " 결과 확인 실패 ",
-                                "description": "설문에 응답하신 이력이 없습니다",
-                                "buttons": [
-                                    {
-                                        "action": "block",
-                                        "messageText": "나의직무찾기",
-                                        "label": "나의직무찾기",
-                                        "blockId": "5dc910428192ac0001c5e495"
-                                    },{
-                                        "action": "message",
-                                        "messageText": "처음으로",
-                                        "label": "처음으로"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        '''
     except Exception as e:
-        print( '%s (%s)' % (e.message, type(e)))
+        print( e)
     else:
         print('else')
         # 먼저 카테고리,숫자0을 엮어서 가져오고
