@@ -86,7 +86,7 @@ def StockSkill(request):
                         "items": [ '''
 
 
-        jsonstr = jsonstr + ','
+        #jsonstr = jsonstr + ','
 
         imageUrl_bind =''
 
