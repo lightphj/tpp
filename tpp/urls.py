@@ -35,7 +35,7 @@ urlpatterns = [
     path('makeA',announce.makeAnnouncement),
     path('makeAD',announce.makeAnnouncementDetail),
     path('AList',announce.announcementList),
-    path('Stock',stocks.StockData),
+    #path('Stock',stocks.StockData),
     path('StockSkill', stocks.StockSkill)
 ]
 
