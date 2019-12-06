@@ -69,8 +69,9 @@ def StockSkill(request):
     # df.dropna()를 이용해 결측값 있는 행 제거 
     df = df.dropna() 
     msg = df['종가'][1].astype(int)
-
-        jsonstr = ''
+    
+    json_str = ((request.body).decode('utf-8'))
+    jsonstr = ''
 
     jsonrepl = ''
 
