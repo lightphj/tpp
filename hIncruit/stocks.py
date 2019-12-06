@@ -43,6 +43,7 @@ def StockData(request):
     return render(request, 'index.html', {'message': msg})
 '''
 
+@csrf_exempt
 def StockSkill(request):
     code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0] 
     
