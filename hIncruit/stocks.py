@@ -95,6 +95,7 @@ def StockSkill(request):
                                 "messageText": "처음으로",
                                 "label": "처음으로"
                             }
+                        ]
                     }
                 }
             ]
