@@ -99,7 +99,7 @@ def StockSkill(request):
     jsonstr = jsonstr + '''
         {
             "title": "현대오토에버 주식정보",
-            "description": "'''+ msg +'''",
+            "description": "'''+ str(msg) +'''",
             "thumbnail": {
                 "imageUrl": "",
                 "fixedRatio": "true"
