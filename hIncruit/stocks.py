@@ -82,7 +82,7 @@ def StockSkill(request):
             "outputs": [
                 {
                     "basicCard": {
-                        "title": " 현대오토에버 주가",
+                        "title": "현대오토에버 주가",
                         "description": "'''+ str(msg) + "원"'''",
                         "buttons": [
                             {
@@ -92,8 +92,8 @@ def StockSkill(request):
                             },
                             {
                                 "action": "message",
-                                "messageText": "처음으로",
-                                "label": "처음으로"
+                                "label": "처음으로",
+                                "messageText": "처음으로"
                             }
                         ]
                     }
