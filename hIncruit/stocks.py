@@ -2,6 +2,7 @@ import pandas as pd
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def get_url(item_name, code_df): 
     code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False) 
