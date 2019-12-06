@@ -88,27 +88,27 @@ def StockSkill(request):
 
         #jsonstr = jsonstr + ','
 
-        imageUrl_bind =''
+        #imageUrl_bind =''
 
-            imageUrl_bind = 'http://52.78.124.188:8000/static/images/irene.jpg'
+        #imageUrl_bind = 'http://52.78.124.188:8000/static/images/irene.jpg'
 
-        jsonstr = jsonstr + '''
-            {
-                "title": "현대오토에버 주식정보",
-                "description": "'''+ msg +'''",
-                "thumbnail": {
-                    "imageUrl": "",
-                    "fixedRatio": "true"
-                },
-                "buttons": [
-                    {
-                        "action": "webLink",
-                        "label": "상세보기",
-                        "webLinkUrl": "http://stock.kakao.com/m/stocks/KOREA-A307950"
-                    }
-                ]
-            }
-        '''
+    jsonstr = jsonstr + '''
+        {
+            "title": "현대오토에버 주식정보",
+            "description": "'''+ msg +'''",
+            "thumbnail": {
+                "imageUrl": "",
+                "fixedRatio": "true"
+            },
+            "buttons": [
+                {
+                    "action": "webLink",
+                    "label": "상세보기",
+                    "webLinkUrl": "http://stock.kakao.com/m/stocks/KOREA-A307950"
+                }
+            ]
+        }
+    '''
 
     #logger.info(jsonrepl)
     jsonfooter = '''
