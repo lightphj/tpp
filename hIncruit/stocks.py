@@ -7,7 +7,7 @@ def get_url(item_name, code_df):
     print("요청 URL = {}".format(url)) 
     return url 
     
-
+'''
 def StockData(request):
     code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0] 
     
@@ -39,10 +39,10 @@ def StockData(request):
     #msg = df
     # 상위 5개 데이터 확인하기
     return render(request, 'index.html', {'message': msg})
-
+'''
 
 def StockSkill(request):
-     code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0] 
+    code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0] 
     
     # 종목코드가 6자리이기 때문에 6자리를 맞춰주기 위해 설정해줌 
     code_df.종목코드 = code_df.종목코드.map('{:06d}'.format) 
