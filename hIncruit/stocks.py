@@ -74,71 +74,37 @@ def StockSkill(request):
     df = df.dropna() 
     msg = df['종가'][1].astype(int)
     
-    json_str = ((request.body).decode('utf-8'))
-    jsonstr = ''
 
-    jsonrepl = ''
-
-    jsonheader = '''{
-
+    jsonstr = '''
+    {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
-                    "carousel": {
-                        "type": "basicCard",
-                        "items": [ '''
-
-
-        #jsonstr = jsonstr + ','
-
-        #imageUrl_bind =''
-
-        #imageUrl_bind = 'http://52.78.124.188:8000/static/images/irene.jpg'
-
-    jsonstr = jsonstr + '''
-        {
-            "title": "현대오토에버 주식정보",
-            "description": "'''+ str(msg) +'''",
-            "thumbnail": {
-                "imageUrl": "",
-                "fixedRatio": "true"
-            },
-            "buttons": [
-                {
-                    "action": "webLink",
-                    "label": "상세보기",
-                    "webLinkUrl": "http://stock.kakao.com/m/stocks/KOREA-A307950"
+                    "basicCard": {
+                        "title": " 현대오토에버 주가",
+                        "description": "'''+ str(msg) + '''",
+                        "buttons": [
+                            {
+                                "action": "webLink",
+                                "label": "상세보기",
+                                "webLinkUrl": "http://stock.kakao.com/m/stocks/KOREA-A307950"
+                            },
+                            {
+                                "action": "message",
+                                "messageText": "처음으로",
+                                "label": "처음으로"
+                            }
+                    }
                 }
             ]
         }
+    }
     '''
-
-    #logger.info(jsonrepl)
-    jsonfooter = '''
-                        ]
-                    }
-                }
-            ],
-        
-            "quickReplies" : [
-                {
-                    "label":"처음으로",
-                    "action":"message",
-                    "messageText":"처음으로"
-                }
-                ''' + jsonrepl +'''
-            ]
-        }   
-    }'''
-
-    #logger.info("\n\n jsonfooter : \n" + jsonfooter)
-    fulljson = jsonheader+jsonstr+jsonfooter
-
     #logger.info("\n\n fulljson : \n" + fulljson)
-    print(fulljson)
+    print(jsonstr)
 
-    dictjson = json.loads(fulljson)
+    dictjson = json.loads(jsonstr)
 
     #print(dictjson)
     #places = place.objects.filter(category_group_code='01')
