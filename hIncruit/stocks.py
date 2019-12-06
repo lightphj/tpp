@@ -99,7 +99,7 @@ def StockSkill(request):
                     }
                 }
             ]
-        }
+        }   
     }
     '''
     #logger.info("\n\n fulljson : \n" + fulljson)
