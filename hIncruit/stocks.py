@@ -60,7 +60,7 @@ def StockSkill(request):
     item_name='현대오토에버'
     url = get_url(item_name, code_df) 
     
-    print(url)
+    #print(url)
     # 일자 데이터를 담을 df라는 DataFrame 정의 
     url='https://finance.naver.com/item/sise_day.nhn?code=307950'
 
@@ -83,7 +83,7 @@ def StockSkill(request):
                 {
                     "basicCard": {
                         "title": " 현대오토에버 주가",
-                        "description": "'''+ str(msg) + '''",
+                        "description": "'''+ str(msg) + "원"'''",
                         "buttons": [
                             {
                                 "action": "webLink",
